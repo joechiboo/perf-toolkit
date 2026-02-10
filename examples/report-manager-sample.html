@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>2025 資訊部年度績效評估（範例）</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page { size: A4; margin: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: #fff;
+    padding: 28mm 22mm 20mm 22mm;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #1a365d 0%, #2b6cb0 40%, #4299e1 70%, #90cdf4 100%);
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #1a365d;
+  }
+
+  .header h1 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #1a365d;
+    letter-spacing: 2px;
+  }
+
+  .header .meta {
+    font-size: 10px;
+    color: #718096;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: #1a365d;
+    padding: 4px 10px;
+    margin: 12px 0 8px 0;
+    letter-spacing: 1px;
+  }
+
+  /* Ranking Table */
+  .rank-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5px;
+    line-height: 1.5;
+  }
+
+  .rank-table th {
+    background: #edf2f7;
+    color: #2d3748;
+    font-weight: 700;
+    padding: 5px 6px;
+    text-align: left;
+    border-bottom: 2px solid #cbd5e0;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+  }
+
+  .rank-table td {
+    padding: 5px 6px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+
+  .rank-table tr:hover { background: #f7fafc; }
+
+  .rank-col { width: 28px; text-align: center; font-weight: 700; color: #718096; }
+  .name-col { width: 58px; font-weight: 700; }
+  .role-col { width: 42px; text-align: center; font-size: 8.5px; color: #718096; }
+  .grade-col { width: 42px; text-align: center; }
+  .highlight-col { width: auto; }
+  .note-col { width: 120px; color: #e53e3e; font-size: 9px; }
+
+  .badge {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-sp { background: #fefcbf; color: #975a16; border: 1px solid #ecc94b; }
+  .badge-a  { background: #c6f6d5; color: #276749; border: 1px solid #68d391; }
+  .badge-b  { background: #e2e8f0; color: #2d3748; border: 1px solid #a0aec0; }
+  .badge-c  { background: #fed7d7; color: #9b2c2c; border: 1px solid #fc8181; }
+
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .stat-box {
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-size: 9px;
+    line-height: 1.6;
+  }
+
+  .stat-box h4 {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #edf2f7;
+    padding-bottom: 3px;
+  }
+
+  .stat-box li {
+    list-style: none;
+    padding-left: 10px;
+    position: relative;
+    color: #4a5568;
+  }
+
+  .stat-box li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #a0aec0;
+  }
+
+  /* Footer */
+  .footer {
+    position: absolute;
+    bottom: 18mm;
+    left: 22mm;
+    right: 22mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 10px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 8.5px;
+    color: #a0aec0;
+  }
+
+  .sign-area {
+    display: flex;
+    gap: 48px;
+  }
+
+  .sign-block {
+    text-align: center;
+    font-size: 9px;
+    color: #718096;
+  }
+
+  .sign-line {
+    width: 80px;
+    border-bottom: 1px solid #a0aec0;
+    margin-bottom: 4px;
+    height: 24px;
+  }
+
+  /* Attendance mini table */
+  .att-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5px;
+    margin-top: 4px;
+  }
+
+  .att-table th {
+    background: #edf2f7;
+    padding: 3px 4px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 8px;
+    border-bottom: 1px solid #cbd5e0;
+  }
+
+  .att-table td {
+    padding: 2.5px 4px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 8.5px;
+  }
+
+  .att-warn { color: #e53e3e; font-weight: 700; }
+  .att-good { color: #276749; }
+
+  .sample-badge {
+    display: inline-block;
+    background: #fff3cd;
+    color: #856404;
+    border: 1px dashed #856404;
+    padding: 2px 8px;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: absolute;
+    top: 14px;
+    right: 22mm;
+    transform: rotate(0deg);
+  }
+
+  @media print {
+    body { background: none; padding: 0; }
+    .page { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="sample-badge">SAMPLE DATA</div>
+
+  <div class="header">
+    <h1>2025 資訊部年度績效評估</h1>
+    <div class="meta">
+      OO 聯合醫檢所 資訊部<br>
+      評核人：主管 A（資訊部主管）<br>
+      日期：2026.02
+    </div>
+  </div>
+
+  <!-- Ranking Table -->
+  <div class="section-title">綜合績效排名</div>
+  <table class="rank-table">
+    <thead>
+      <tr>
+        <th class="rank-col">#</th>
+        <th class="name-col">代號</th>
+        <th class="role-col">角色</th>
+        <th class="grade-col">等第</th>
+        <th class="highlight-col">核心貢獻</th>
+        <th class="note-col">待改善 / 備註</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="rank-col">1</td>
+        <td class="name-col">PG-01</td>
+        <td class="role-col">PG</td>
+        <td class="grade-col"><span class="badge badge-sp">特優</span></td>
+        <td>CI/CD 導入、AI 諮詢報告上線、大章魚系統、核心系統全年迭代。技術帶動力最強，產出量與品質均屬頂尖。</td>
+        <td>早退次數偏高（22次），需留意</td>
+      </tr>
+      <tr>
+        <td class="rank-col">2</td>
+        <td class="name-col">PG-02</td>
+        <td class="role-col">PG</td>
+        <td class="grade-col"><span class="badge badge-a">優</span></td>
+        <td>Web 系統穩定交付、庫存系統多場域推展、CRM 四階段開發、ISO 帳號安全機制。架構思維與出勤均為標竿。</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td class="rank-col">3</td>
+        <td class="name-col">IF-01</td>
+        <td class="role-col">儀器</td>
+        <td class="grade-col"><span class="badge badge-a">優</span></td>
+        <td>雙向連線數量最多、系統重構、AI 工具開發、網路報告翻新。產出量極大。</td>
+        <td class="att-warn">遲到率偏高，需正式改善</td>
+      </tr>
+      <tr>
+        <td class="rank-col">4</td>
+        <td class="name-col">IF-02</td>
+        <td class="role-col">儀器</td>
+        <td class="grade-col"><span class="badge badge-b">甲</span></td>
+        <td>連線伺服器跨分部擴展、換系統儀器全數調整、新實驗室儀器連線。穩定可靠。</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td class="rank-col">5</td>
+        <td class="name-col">PG-03</td>
+        <td class="role-col">PG</td>
+        <td class="grade-col"><span class="badge badge-b">甲</span></td>
+        <td>新功能從分析到上線完整交付、Web 月需求 100% 達成。出勤零遲到，紀律面最佳。</td>
+        <td>部分專案進度偏慢</td>
+      </tr>
+      <tr>
+        <td class="rank-col">6</td>
+        <td class="name-col">MIS-01</td>
+        <td class="role-col">MIS</td>
+        <td class="grade-col"><span class="badge badge-b">甲</span></td>
+        <td>ISO27001 驗證推動、虛擬化升版、資料庫遷移、網路與資安基礎建設維護。</td>
+        <td>部分佈署進度落後</td>
+      </tr>
+      <tr>
+        <td class="rank-col">7</td>
+        <td class="name-col">PG-04</td>
+        <td class="role-col">PG</td>
+        <td class="grade-col"><span class="badge badge-b">甲</span></td>
+        <td>顧問角色、特殊專案、政府系統上傳、新技術研究。日常維運的核心諮詢人員。</td>
+        <td>里程碑部分月份空白、遲到率偏高</td>
+      </tr>
+      <tr>
+        <td class="rank-col">8</td>
+        <td class="name-col">IF-03</td>
+        <td class="role-col">儀器</td>
+        <td class="grade-col"><span class="badge badge-b">甲</span></td>
+        <td>新人通過試用考核，年底產出加速（儀器連線、自動化工具）。學習態度積極。</td>
+        <td>新人觀察期，次年需展現獨立能力</td>
+      </tr>
+      <tr>
+        <td class="rank-col">9</td>
+        <td class="name-col">PG-05</td>
+        <td class="role-col">PG</td>
+        <td class="grade-col"><span class="badge badge-c">乙</span></td>
+        <td>公衛系統維護、資料遷移、上傳程式開發。</td>
+        <td>專案進度慢、系統品質待提升、協作待加強</td>
+      </tr>
+      <tr>
+        <td class="rank-col">10</td>
+        <td class="name-col">MIS-02</td>
+        <td class="role-col">MIS</td>
+        <td class="grade-col"><span class="badge badge-c">乙</span></td>
+        <td>OS 升級專案、客戶端維護、ISO 文件配合。</td>
+        <td>主動性不足、協作配合度低</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Bottom Section: Attendance + Evaluation Criteria -->
+  <div class="stats-grid">
+
+    <div class="stat-box">
+      <h4>考勤摘要（異常提示）</h4>
+      <table class="att-table">
+        <thead>
+          <tr><th>代號</th><th>遲到率</th><th>早退率</th><th>請假天數</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>IF-01</td><td class="att-warn">87.3%</td><td class="att-good">0%</td><td>41</td></tr>
+          <tr><td>PG-04</td><td class="att-warn">29.7%</td><td>2.2%</td><td>16.9</td></tr>
+          <tr><td>PG-05</td><td>20.2%</td><td>2.6%</td><td>13.5</td></tr>
+          <tr><td>PG-01</td><td class="att-good">2.7%</td><td class="att-warn">10.0%</td><td>30.5</td></tr>
+          <tr><td>MIS-02</td><td>12.6%</td><td>20.5%*</td><td>9</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:7.5px;color:#a0aec0;margin-top:3px;">* MIS-02 早退為班別設定問題，不列異常<br>完整考勤僅列異常項，其餘人員出勤正常</div>
+    </div>
+
+    <div class="stat-box">
+      <h4>評估標準（五大面向）</h4>
+      <li>專案達成 30% — 完成度與品質</li>
+      <li>技術成長 20% — 新技術、認證、知識分享</li>
+      <li>日常維運 20% — 問題處理效率、系統穩定度</li>
+      <li>紀律配合 15% — 值班出勤、規範遵守</li>
+      <li>團隊協作 15% — 跨組支援、溝通態度</li>
+      <div style="margin-top:6px;padding-top:4px;border-top:1px solid #edf2f7;">
+        <li><strong>特優</strong> 10%（1人）超越期待，顯著貢獻</li>
+        <li><strong>優</strong> 20%（2人）完全達標，有亮點</li>
+        <li><strong>甲</strong> 50%（5人）達標，表現穩定</li>
+        <li><strong>乙</strong> 20%（2人）有改善空間</li>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div style="color:#cbd5e0;">OO 聯合醫檢所 資訊部 ｜ 2025年度績效評估 ｜ 範例文件</div>
+    <div class="sign-area">
+      <div class="sign-block"><div class="sign-line"></div>部門主管</div>
+      <div class="sign-block"><div class="sign-line"></div>上級主管</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
