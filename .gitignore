@@ -25,10 +25,13 @@ build/
 .env
 .env.local
 
-# Sensitive data
+# Sensitive data (real performance reports, attendance, personal info)
 *.sensitive.*
 *-real.*
 data/real/
+*績效評估報告*
+*考勤*raw*
+*attendance*real*
 
 # Logs
 *.log
