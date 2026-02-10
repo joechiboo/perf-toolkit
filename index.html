@@ -3,56 +3,398 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>perf-toolkit</title>
+<title>perf-toolkit — IT 團隊績效管理工具</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
     font-family: 'Noto Sans TC', sans-serif;
-    max-width: 640px;
-    margin: 80px auto;
-    padding: 0 20px;
     color: #2d3748;
     line-height: 1.8;
+    background: #f7fafc;
   }
-  h1 { color: #1a365d; margin-bottom: 8px; }
-  .subtitle { color: #718096; margin-bottom: 32px; }
-  a {
-    color: #2b6cb0;
-    text-decoration: none;
-    border-bottom: 1px solid #bee3f8;
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+    color: #fff;
+    padding: 64px 20px 48px;
+    text-align: center;
   }
-  a:hover { border-bottom-color: #2b6cb0; }
-  .card {
+  .hero h1 { font-size: 32px; font-weight: 900; letter-spacing: 2px; margin-bottom: 8px; }
+  .hero .subtitle { color: #bee3f8; font-size: 16px; font-weight: 300; }
+  .hero .pain {
+    max-width: 560px;
+    margin: 24px auto 0;
+    font-size: 14px;
+    color: #e2e8f0;
+    line-height: 2;
+  }
+
+  /* Container */
+  .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+
+  /* Section */
+  .section { padding: 40px 0; }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  /* Framework grid */
+  .fw-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .fw-card {
+    background: #fff;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
-    padding: 16px 20px;
-    margin-bottom: 12px;
+    padding: 20px;
+    text-align: center;
   }
-  .card h3 { margin: 0 0 4px 0; font-size: 15px; }
-  .card p { margin: 0; font-size: 13px; color: #718096; }
-  .badge {
-    display: inline-block;
+  .fw-card .icon { font-size: 28px; margin-bottom: 8px; }
+  .fw-card h3 { font-size: 14px; font-weight: 700; color: #1a365d; margin-bottom: 4px; }
+  .fw-card p { font-size: 12px; color: #718096; }
+
+  /* Evaluation table */
+  .eval-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .eval-table th {
     background: #edf2f7;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 12px;
     color: #4a5568;
+    border-bottom: 2px solid #cbd5e0;
+  }
+  .eval-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .eval-table tr:last-child td { border-bottom: none; }
+  .eval-table .w-col { text-align: center; font-weight: 700; color: #2b6cb0; }
+
+  /* Role cards */
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .role-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    border-top: 3px solid #2b6cb0;
+  }
+  .role-card h4 { font-size: 14px; color: #1a365d; margin-bottom: 6px; }
+  .role-card p { font-size: 12px; color: #718096; line-height: 1.6; }
+  .role-card .emphasis { color: #e53e3e; font-weight: 500; }
+
+  /* Grade distribution */
+  .grade-bar {
+    display: flex;
+    border-radius: 6px;
+    overflow: hidden;
+    height: 36px;
+    margin: 16px 0;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .grade-bar div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+  .g-sp { background: #d69e2e; width: 10%; }
+  .g-a  { background: #38a169; width: 20%; }
+  .g-b  { background: #4299e1; width: 50%; }
+  .g-c  { background: #a0aec0; width: 20%; }
+
+  .grade-legend {
+    display: flex;
+    gap: 20px;
+    font-size: 12px;
+    color: #718096;
+    margin-bottom: 8px;
+  }
+  .grade-legend span { font-weight: 700; }
+
+  /* Modules */
+  .mod-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .mod-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .mod-card h3 { font-size: 14px; font-weight: 700; color: #1a365d; margin-bottom: 6px; }
+  .mod-card p { font-size: 12px; color: #718096; line-height: 1.7; }
+  .mod-tag {
+    display: inline-block;
+    background: #ebf8ff;
+    color: #2b6cb0;
     padding: 2px 8px;
     border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  /* Report samples */
+  .sample-card {
+    display: flex;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    transition: box-shadow 0.2s;
+  }
+  .sample-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .sample-card .label {
+    background: #1a365d;
+    color: #fff;
+    writing-mode: vertical-rl;
+    padding: 12px 8px;
     font-size: 11px;
-    margin-left: 8px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sample-card .body { padding: 14px 16px; flex: 1; }
+  .sample-card h3 { font-size: 14px; margin-bottom: 4px; }
+  .sample-card h3 a { color: #1a365d; text-decoration: none; border: none; }
+  .sample-card h3 a:hover { color: #2b6cb0; }
+  .sample-card p { font-size: 12px; color: #718096; }
+
+  /* Principle */
+  .principle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .principle-item {
+    background: #fff;
+    border-left: 3px solid #2b6cb0;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+  }
+  .principle-item h4 { font-size: 13px; color: #1a365d; margin-bottom: 4px; }
+  .principle-item p { font-size: 12px; color: #718096; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 20px;
+    font-size: 12px;
+    color: #a0aec0;
+    border-top: 1px solid #e2e8f0;
+  }
+  .footer a { color: #718096; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .fw-grid, .role-grid { grid-template-columns: 1fr; }
+    .mod-grid, .principle-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    .hero { background: #1a365d; }
   }
 </style>
 </head>
 <body>
-  <h1>perf-toolkit</h1>
-  <div class="subtitle">5-15 人 IT 團隊的績效管理工具</div>
 
-  <div class="card">
-    <h3><a href="examples/report-manager-sample.html">主管版績效報告</a><span class="badge">範例</span></h3>
-    <p>脫敏後的年度績效評估報告，含排名、考勤摘要、評估標準</p>
+  <!-- Hero -->
+  <div class="hero">
+    <h1>perf-toolkit</h1>
+    <div class="subtitle">5-15 人 IT 團隊的績效管理工具</div>
+    <div class="pain">
+      資料散落各處？評估標準不一致？報告製作耗時？<br>
+      讓績效評估變成一個<strong>可重複、可追蹤、有依據</strong>的流程。
+    </div>
   </div>
 
-  <div class="card">
-    <h3><a href="https://github.com/joechiboo/perf-toolkit">GitHub Repo</a></h3>
-    <p>原始碼、規格文件、開發文檔</p>
+  <div class="container">
+
+    <!-- 評估框架 -->
+    <div class="section">
+      <div class="section-title">評估框架</div>
+      <p style="font-size:14px;color:#4a5568;margin-bottom:16px;">
+        六大面向加權評分，權重依角色（PG / MIS / 儀器連線）差異化調整。<br>
+        <strong>核心原則：工具提供數據參考，最終判斷永遠是主管的。</strong>
+      </p>
+      <table class="eval-table">
+        <thead>
+          <tr>
+            <th>評估面向</th>
+            <th class="w-col">PG</th>
+            <th class="w-col">MIS</th>
+            <th class="w-col">儀器連線</th>
+            <th>資料來源</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>專案達成</td><td class="w-col">25%</td><td class="w-col">20%</td><td class="w-col">25%</td><td>里程碑追蹤</td></tr>
+          <tr><td>變更單產出</td><td class="w-col">15%</td><td class="w-col">10%</td><td class="w-col">15%</td><td>變更單統計</td></tr>
+          <tr><td>技術成長</td><td class="w-col">20%</td><td class="w-col">15%</td><td class="w-col">20%</td><td>主管評估 + 自評</td></tr>
+          <tr><td>日常維運</td><td class="w-col">10%</td><td class="w-col">25%</td><td class="w-col">10%</td><td>主管評估</td></tr>
+          <tr><td>紀律配合</td><td class="w-col">15%</td><td class="w-col">15%</td><td class="w-col">15%</td><td>考勤數據</td></tr>
+          <tr><td>團隊協作</td><td class="w-col">15%</td><td class="w-col">15%</td><td class="w-col">15%</td><td>主管評估</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 角色分類 -->
+    <div class="section" style="padding-top:0;">
+      <div class="section-title">三種工作角色</div>
+      <div class="role-grid">
+        <div class="role-card">
+          <h4>PG（程式設計）</h4>
+          <p>系統開發、功能實作、bug 修復<br>
+          側重<strong>開發產出</strong>與技術成長<br>
+          變更單：容易量化，有明確交付物</p>
+        </div>
+        <div class="role-card">
+          <h4>MIS（資訊管理）</h4>
+          <p>系統維護、帳號管理、設備採購<br>
+          側重<strong>日常維運</strong>與問題處理<br>
+          <span class="emphasis">變更單較難湊，需特別設計指標</span></p>
+        </div>
+        <div class="role-card">
+          <h4>儀器連線</h4>
+          <p>醫療/檢驗設備介接與維護<br>
+          側重<strong>專案達成</strong>與技術深度<br>
+          變更單：專案型，單次工作量大</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 等第分配 -->
+    <div class="section" style="padding-top:0;">
+      <div class="section-title">等第分配</div>
+      <div class="grade-bar">
+        <div class="g-sp">特優 10%</div>
+        <div class="g-a">優 20%</div>
+        <div class="g-b">甲 50%</div>
+        <div class="g-c">乙 20%</div>
+      </div>
+      <div class="grade-legend">
+        <div><span style="color:#d69e2e;">特優</span> 超越期待，顯著貢獻</div>
+        <div><span style="color:#38a169;">優</span> 完全達標，有亮點</div>
+        <div><span style="color:#4299e1;">甲</span> 達標，表現穩定</div>
+        <div><span style="color:#a0aec0;">乙</span> 有改善空間</div>
+      </div>
+    </div>
+
+    <!-- 四大模組 -->
+    <div class="section" style="padding-top:0;">
+      <div class="section-title">四大模組</div>
+      <div class="mod-grid">
+        <div class="mod-card">
+          <div class="mod-tag">核心</div>
+          <h3>評估框架</h3>
+          <p>六大面向加權評分，依角色差異化。支援權重自訂，系統計算參考分數，主管做最終判斷。</p>
+        </div>
+        <div class="mod-card">
+          <div class="mod-tag">追蹤</div>
+          <h3>里程碑追蹤</h3>
+          <p>年初設定工作計畫，每月更新進度。年中可新增里程碑，年底自動彙總達成率。</p>
+        </div>
+        <div class="mod-card">
+          <div class="mod-tag">分析</div>
+          <h3>考勤分析</h3>
+          <p>匯入 HR 系統 CSV，自動統計遲到率、早退率、請假天數。異常項目自動標記警示。</p>
+        </div>
+        <div class="mod-card">
+          <div class="mod-tag">產出</div>
+          <h3>報告產生器</h3>
+          <p>一鍵產出三種版本：主管版（完整排名）、公佈版（僅等第）、個人版（面談用）。HTML + Excel。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 設計原則 -->
+    <div class="section" style="padding-top:0;">
+      <div class="section-title">設計原則</div>
+      <div class="principle-grid">
+        <div class="principle-item">
+          <h4>工具不做決定</h4>
+          <p>系統提供數據與參考，最終判斷永遠是主管的</p>
+        </div>
+        <div class="principle-item">
+          <h4>輕量優先</h4>
+          <p>JSON/CSV 存資料，零部署成本，fork 即用</p>
+        </div>
+        <div class="principle-item">
+          <h4>漸進式採用</h4>
+          <p>各模組獨立可用，不需全套導入</p>
+        </div>
+        <div class="principle-item">
+          <h4>隱私敏感</h4>
+          <p>預設脫敏，敏感資料不進版控</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 範例報告 -->
+    <div class="section" style="padding-top:0;">
+      <div class="section-title">範例報告</div>
+      <div class="sample-card">
+        <div class="label">主管版</div>
+        <div class="body">
+          <h3><a href="examples/report-manager-sample.html">年度績效評估報告</a></h3>
+          <p>含綜合排名、等第分配、考勤異常摘要、評估標準。脫敏範例，所有姓名以角色代號呈現。</p>
+        </div>
+      </div>
+      <div class="sample-card" style="opacity:0.5;pointer-events:none;">
+        <div class="label" style="background:#718096;">公佈版</div>
+        <div class="body">
+          <h3>部門公告版報告</h3>
+          <p>僅等第分組，無排名無負面備註。（開發中）</p>
+        </div>
+      </div>
+      <div class="sample-card" style="opacity:0.5;pointer-events:none;">
+        <div class="label" style="background:#718096;">個人版</div>
+        <div class="body">
+          <h3>個人績效面談報告</h3>
+          <p>個人六大面向分析，用於一對一面談。（開發中）</p>
+        </div>
+      </div>
+    </div>
+
   </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <a href="https://github.com/joechiboo/perf-toolkit">GitHub</a> ・
+    perf-toolkit ・ 專為 5-15 人 IT 團隊設計
+  </div>
+
 </body>
 </html>
