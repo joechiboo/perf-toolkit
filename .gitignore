@@ -30,8 +30,12 @@ build/
 *-real.*
 data/real/
 *績效評估報告*
+*年度績效*
 *考勤*raw*
 *attendance*real*
+
+# Private working drafts (real names, undecided ratings) - NEVER commit
+private/
 
 # Logs
 *.log
