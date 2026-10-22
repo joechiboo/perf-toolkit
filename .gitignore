@@ -35,7 +35,9 @@ data/real/
 *attendance*real*
 
 # Private working drafts (real names, undecided ratings) - NEVER commit
+# Real data now lives outside this repo (see CLAUDE.local.md); these stay as a safety net
 private/
+CLAUDE.local.md
 
 # Logs
 *.log
